@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import * as Tone from 'tone';
 
 function App() {
+  const notes = ["C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4"];
+  const cMajorTransitionMatrix = [
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14]
+  ];
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      
     </div>
   );
 }
