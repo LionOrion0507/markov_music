@@ -1,4 +1,4 @@
-import './App.css';
+import styles from './App.css';
 import * as Tone from 'tone';
 import { useEffect, useRef, useState } from 'react';
 
@@ -14,11 +14,18 @@ function App() {
     [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
     [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
     [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
+    [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14],
     [0.16, 0, 0.14, 0, 0.14, 0.14, 0, 0.14, 0, 0.14, 0, 0.14]
   ];
-  let previousIndex = 0;
+  let previousIndex = null;
   let currentIndex = 0;
   let nextIndex = 0;
+  const [previousIndexState, setPreviousIndexState] = useState(previousIndex);
+  const [currentIndexState, setCurrentIndexState] = useState(currentIndex);
 
   const startMusic = async () => {
     await Tone.start();
@@ -44,7 +51,7 @@ function App() {
       const synth = new Tone.PolySynth().toDestination();
       let chordIndex = 0;
       loopRef.current = new Tone.Loop(() => {
-        synth.volume.value = -6; // Ajusta el volumen del sintetizador
+        synth.volume.value = -6;
         synth.triggerAttackRelease(chordProgression[chordIndex], "1m");
         chordIndex = (chordIndex + 1) % chordProgression.length;
       }, "1m").start(0);
@@ -69,15 +76,63 @@ function App() {
         randomNotesLoop.stop();
         randomNotesLoop.dispose();
       }
+
+      requestAnimationFrame(() => {
+        setPreviousIndexState(previousIndex);
+        setCurrentIndexState(currentIndex);
+      });
     }, "4n").start(0);
   };
-  
 
   return (
-    <div>
-      <button onClick={startMusic} disabled={isPlaying}>
-        {isPlaying ? 'Stop' : 'Start'} Music
-      </button>
+    <div className='content'>
+      <div>
+        <h1>Procesos estocásticos</h1>
+        <h2>Escala de Do mayor</h2>
+        <div className='notesInfo'>
+          {notes.map((note, index) => (
+            <p key={index}>{note}</p>
+          ))}
+        </div>
+        <h2>Progresión de acordes</h2>
+        <div className='notesInfo'>
+          <p>C4</p>
+          <p>A4</p>
+          <p>D4</p>
+          <p>G4</p>
+        </div>
+        <h3>Nota actual</h3>
+        <p>{notes[currentIndexState]}</p>
+        <button onClick={startMusic} disabled={isPlaying}>
+          {isPlaying ? 'Stop' : 'Start'} Music
+        </button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            {notes.map((note, index) => (
+              <td key={index} className='tableCell'>{note}</td>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {notes.map((note, index) => (
+            <tr key={index} className={
+              index === currentIndexState ? 'currentNoteRow' 
+              : index === previousIndexState ? 'previousNoteRow' : ''}
+            >
+              <td className='tableCell'>{note}</td>
+              {cMajorTransitionMatrix[index].map((value, noteIndex) => {
+              return (
+                <td key={noteIndex} className={`tableCell ${noteIndex === currentIndexState && index === previousIndexState ? 'currentSelectedNote' : ''}`}>
+                  {value.toFixed(2)}
+                </td>
+              )})}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

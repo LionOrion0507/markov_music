@@ -1,0 +1,30 @@
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.notesInfo {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.tableCell {
+  padding: 10px;
+  text-align: center;
+}
+
+.previousNoteRow {
+  background-color: #ff0000;
+}
+
+.currentNoteRow {
+  background-color: #00ff00;
+}
+
+.currentSelectedNote {
+  background-color: #0000ff;
+}
