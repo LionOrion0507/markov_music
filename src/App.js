@@ -1,4 +1,4 @@
-import styles from './App.css';
+import './App.css';
 import * as Tone from 'tone';
 import { useEffect, useRef, useState } from 'react';
 
@@ -87,22 +87,26 @@ function App() {
   return (
     <div className='content'>
       <div>
-        <h1>Procesos estocásticos</h1>
-        <h2>Escala de Do mayor</h2>
+        <h1>Stochastic Proceses</h1>
+        <h2>C major scale</h2>
         <div className='notesInfo'>
           {notes.map((note, index) => (
             <p key={index}>{note}</p>
           ))}
         </div>
-        <h2>Progresión de acordes</h2>
+        <h2>Chord Progression</h2>
         <div className='notesInfo'>
           <p>C4</p>
           <p>A4</p>
           <p>D4</p>
           <p>G4</p>
         </div>
-        <h3>Nota actual</h3>
+        <h2>Current Note</h2>
         <p>{notes[currentIndexState]}</p>
+        <h2>Colors Explanation</h2>
+        <p className='currentNoteRow'>Current note probability row</p>
+        <p className='currentSelectedNote'>Current selected note</p>
+        <p className='previousNoteRow'>Previous note probability row</p>
         <button onClick={startMusic} disabled={isPlaying}>
           {isPlaying ? 'Stop' : 'Start'} Music
         </button>
@@ -125,7 +129,9 @@ function App() {
               <td className='tableCell'>{note}</td>
               {cMajorTransitionMatrix[index].map((value, noteIndex) => {
               return (
-                <td key={noteIndex} className={`tableCell ${noteIndex === currentIndexState && index === previousIndexState ? 'currentSelectedNote' : ''}`}>
+                <td key={noteIndex} className={`tableCell ${noteIndex === currentIndexState && index === previousIndexState ? 
+                  'currentSelectedNote' : ''}`
+                }>
                   {value.toFixed(2)}
                 </td>
               )})}
